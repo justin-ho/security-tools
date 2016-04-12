@@ -20,30 +20,36 @@ def main():
   argv = sys.argv[1:]
 
   try:
-    opts, args = getopt.getopt(argv, "i:n:")
+    opts, args = getopt.getopt(argv, "m:n:")
   except getopt.GetoptError:
-    print 'caesar.py -i <input string> -n <number of shifts>'
+    print 'caesar.py -m <message> -n <number of shifts>'
     sys.exit(2)
 
   # All options must be specified
   if (len(opts) < 2):
-    print 'caesar.py -i <input string> -n <number of shifts>'
+    print 'caesar.py -m <message> -n <number of shifts>'
     sys.exit(2)
 
+  message = ''
+  shifts = ''
   #  get and set all the user defined options
   for opt, arg in opts:
-    if (opt == '-i'):
-      instring = arg
+    if (opt == '-m'):
+      message = arg
     elif (opt == '-n'):
       if (not arg.isdigit()):
-        print 'caesar.py -i <input string> -n <number of shifts>'
+        print 'caesar.py -m <message> -n <number of shifts>'
         sys.exit(2)
       shifts = int(arg)
+  if (message == '' or shifts == ''):
+      print 'caesar.py -m <message> -n <number of shifts>'
+      sys.exit(2)
+
 
   outstring = ""
-  #  for each character in the input string if the character is a letter shift the character
+  #  for each character in the message if the character is a letter shift the character
   #  by the given number of shifts
-  for c in instring:
+  for c in message:
     if (c.isalpha()):
       outstring += shift(c, shifts)
     else:
