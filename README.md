@@ -13,11 +13,11 @@ To run the script execute this command:
 see run.sh for examples
 
 ### hash-dictionary.py
-A tool to generate hashes from a dictionary. This tool was created to assist in creating password cracking challenges for CTF's. The tool will hash each line in the dictionary individually and output the hashes in hex to the outputfile. The option of specifying the hashing algorithm is given, if no hashing algorithm is specified the default algorithm is sha256.
+A tool to generate hashes from a dictionary. This tool was created to assist in creating password cracking challenges for CTF's. The tool will hash each line in the dictionary individually and output the hashes in hex to the outputfile. The option of specifying the hashing algorithm is given, if no hashing algorithm is specified the default algorithm is sha256. if the flag option is used the hash will be concatenated to the given flag title.
 
 To run the script execute this command: 
 
-```python hash-dictionary.py [-a <hashing algorithm>] -i <input file> -o <output file>```
+```python hash-dictionary.py [-a <hashing algorithm> -f <flag title>] -i <input file> -o <output file>```
 
 see run.sh for examples
 

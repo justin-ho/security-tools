@@ -2,6 +2,7 @@
 
 #  python script to hash every single line in a dictionary [input] file
 #  can be used to create passwork cracking challenges for a CTF
+#  if flag option is set the hash will be concatenated to the flag title which can then be used as flags for a CTF
 
 import sys 
 import getopt
@@ -10,7 +11,7 @@ import hashlib
 #  quit the program and print the message, prints a default message if no message is given
 def quit(message):
   if (message == ''):
-    print 'Usage: hash-dictionary.py [-a <hashing algorithm>] -i <input file> -o <output file>'
+    print 'Usage: hash-dictionary.py [-a <hashing algorithm> -f <flag title>] -i <input file> -o <output file>'
   else:
     print message
   sys.exit(2)
@@ -19,7 +20,7 @@ def quit(message):
 def main():
   argv = sys.argv[1:]
   try:
-    opts, args = getopt.getopt(argv, "i:o:a:")
+    opts, args = getopt.getopt(argv, "i:o:a:f:")
   except getopt.GetoptError:
     quit('')
 
@@ -30,6 +31,7 @@ def main():
   inputfile = ''
   outputfile = ''
   algorithm = ''
+  flag = ''
   #  get and set all the user defined options
   for opt, arg in opts:
     if (opt == '-i'):
@@ -38,22 +40,24 @@ def main():
       outputfile = arg
     elif (opt == '-a'):
       algorithm = arg
+    elif (opt == '-f'):
+      flag = arg
 
   #  the input and output files must be set
   if (inputfile == '' or outputfile == ''):
      quit('')
  
+  #  if an algorithm is given it must be a guaranteed algorithm
   if (algorithm != '' and algorithm not in hashlib.algorithms_guaranteed):
     quit("Usage: \'" + algorithm + "\'" + " not a guaranteed algorithm")
     
-
   #  open input and output file objects
   print 'opening input file: ' + inputfile
   infile = open(inputfile, "r")
   print 'opening output file: ' + outputfile
   outfile = open(outputfile, "w")
 
-  print 'hashing passwords...'
+  print 'hashing input...'
   #  for every line in the file
   for line in infile:
     #  set the hashing algorithm
@@ -64,7 +68,7 @@ def main():
     #  set the hash message to the line from the input
     md.update(line.strip('\n'))
     #  write the hash to the output file
-    outfile.write(md.hexdigest() + '\n')
+    outfile.write(flag + md.hexdigest() + '\n')
 
   #  close out the file objects
   print 'closing input file: ' + inputfile

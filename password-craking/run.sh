@@ -22,3 +22,6 @@ python hash-dictionary.py -a sha1 -i "POSIX-lib.dic" -o "hashed-POSIX.dic"
 
 #  ELEMENTS
 python hash-dictionary.py -a md5 -i "elements.dic" -o "hashed-elements.dic"
+
+#  Flag generation example
+python hash-dictionary.py -a sha256 -f "FLAG-" -i "hawaiian.dic" -o "flags.dic"
