@@ -9,6 +9,7 @@ A tool to generate dictionaries from a given url for password cracking. The scri
 To run the script execute this command:
 
 ```python gen-dictionary.py -u <URL> -o <outputfile> -s <starting delimeter> -e <ending delimeter>```
+
 see run.sh for examples
 
 ### hash-dictionary.py
