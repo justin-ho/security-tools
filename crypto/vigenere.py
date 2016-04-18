@@ -1,5 +1,13 @@
 #!/usr/bin/python
 
+"""Python script to decrypt a vigenere cipher
+
+Uses the given key to shift the letters in the given message.
+
+Example:
+    python vigenere.py -m 'This is my secret message' -k 'mykey'
+"""
+
 import sys
 import getopt
 from substitution import vigenere
@@ -7,6 +15,7 @@ from util import mquit
 
 
 def main():
+    """Main function to run the script"""
     argv = sys.argv[1:]
 
     try:

@@ -1,7 +1,14 @@
 #!/usr/bin/python
 
-# shifting works with everything but these characters: $!
-# this bug seems to be due to bash issues
+"""Python script to perform a caesar shift on a caesar cipher
+
+Shifting works with everything but these characters: $!
+This bug seems to be due to bash issues.
+
+Example:
+    python caesar.py -m 'This is my secret message' -n 8
+"""
+
 
 import sys
 import getopt
@@ -10,6 +17,7 @@ from substitution import caesar
 
 
 def main():
+    """Main function to run the script"""
     argv = sys.argv[1:]
 
     try:
@@ -38,4 +46,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

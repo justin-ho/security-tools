@@ -1,8 +1,15 @@
 #!/usr/bin/python
 
-#  python script to hash every single line in a dictionary [input] file
-#  can be used to create password cracking challenges for a CTF
-#  if flag option is set the hash will be concatenated to the flag title which can then be used as flags for a CTF
+"""Python script to hash every single line in a dictionary [input] file
+
+Can be used to create password cracking challenges for a CTF.
+If the flag option is set the hash will be concatenated to the flag title which can then be used as flags for a CTF.
+
+Example:
+HAWAIIAN DICTIONARY
+python hash-dictionary.py -a sha512 -i "hawaiian.dic" -o "hashed-hawaiian.dic"
+
+"""
 
 import sys
 import getopt
@@ -11,6 +18,7 @@ from util import mquit
 
 
 def main():
+    """Main function to run the script"""
     argv = sys.argv[1:]
     try:
         opts, args = getopt.getopt(argv, "i:o:a:f:")
@@ -23,7 +31,7 @@ def main():
 
     inputfile = ''
     outputfile = ''
-    algorithm = ''
+    algorithm = 'sha256'
     flag = ''
     #  get and set all the user defined options
     for opt, arg in opts:
@@ -41,7 +49,7 @@ def main():
         mquit('Usage: hash-dictionary.py [-a <hashing algorithm> -f <flag title>] -i <input file> -o <output file>')
 
     #  if an algorithm is given it must be a guaranteed algorithm
-    if algorithm != '' and algorithm not in hashlib.algorithms_guaranteed:
+    if algorithm != 'sha256' and algorithm not in hashlib.algorithms_guaranteed:
         mquit("Usage: \'" + algorithm + "\'" + " not a guaranteed algorithm")
 
     #  open input and output file objects
@@ -54,10 +62,7 @@ def main():
     #  for every line in the file
     for line in infile:
         #  set the hashing algorithm
-        if algorithm == '':
-            md = hashlib.sha256()
-        else:
-            md = hashlib.new(algorithm)
+        md = hashlib.new(algorithm)
         #  set the hash message to the line from the input
         md.update(line.strip('\n'))
         #  write the hash to the output file

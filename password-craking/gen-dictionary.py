@@ -1,16 +1,21 @@
 #!/usr/bin/python
 
-#  python script to generate a dictionary given a url and starting and ending delimeters
+"""Python script to generate a dictionary given a url and starting and ending delimeters
+
+Example:
+    HAWAIIAN DICTIONARY
+    python gen-dictionary.py -u "http://hawaiian-words.com/hawaiian-dictionary"
+    -o "hawaiian.dic" -s "<tr    ><td >" -e "</td>"
+"""
 
 import sys
 import getopt
 import urllib
 from util import mquit
 
-#  **************************** MAIN FUNCTION TO RUN THE SCRIPT *********************
-
 
 def main():
+    """Main function to run the script"""
     argv = sys.argv[1:]
     try:
         opts, args = getopt.getopt(argv, "u:o:s:e:")
@@ -62,4 +67,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

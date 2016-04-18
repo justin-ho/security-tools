@@ -1,3 +1,5 @@
+"""Functions for substitution ciphers"""
+
 def shift(char, shifts):
     """Shifts the given character by the given number of shifts"""
     temp = ord(char) + (shifts % 26)
