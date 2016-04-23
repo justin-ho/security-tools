@@ -4,6 +4,12 @@
 
 Uses the given key to shift the letters in the given message.
 
+-m,
+    The message to encrypt using the key
+
+-k,
+    The key to encrypt the message with
+
 Example:
     python vigenere.py -m 'This is my secret message' -k 'mykey'
 """
