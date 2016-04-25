@@ -56,7 +56,7 @@ def main():
     line = site.readline()
     while line != "":
         if line.find(start) != -1 and line.find(end) != -1:
-            outputfile.write(line[line.find(start) + len(start): line.find(end)] + "\n")
+            outputfile.write(line[line.find(start) + len(start): line.find(end)].rstrip() + "\n")
         line = site.readline()
 
     #  close connections
