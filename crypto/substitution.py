@@ -18,6 +18,8 @@ def vigenere(message, key):
     #  for each character in the input string if the character is a letter shift the character
     #  by the given number of shifts, given by the ascii value of the given key
     for index in range(len(message)):
+        while not key[keyindex % len(key)].isalpha():
+            keyindex += 1
         if message[index].isalpha():
             if key[keyindex % len(key)].islower():
                 temp = ord(key[keyindex % len(key)]) - 97
