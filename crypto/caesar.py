@@ -10,6 +10,10 @@ This bug seems to be due to bash issues.
 -n,
     the number of shifts to shift the cipher
 -e,
+    Encrypt the message
+-d,
+    Decrypt the message
+-a,
     Enumerate all 26 caesar shift possibilities
 
 Example:
@@ -26,42 +30,47 @@ from substitution import caesar
 def main():
     """Main function to run the script"""
     argv = sys.argv[1:]
-
+    qmessage = 'caesar.py -m <message> -n <number of shifts> [-a -e -d]'
     try:
-        opts, args = getopt.getopt(argv, "m:n:e")
+        opts, args = getopt.getopt(argv, "m:n:eda")
     except getopt.GetoptError:
-        mquit('caesar.py -m <message> -n <number of shifts> [-e]')
+        mquit(qmessage)
 
     # All options must be specified except for the enumeration option
-    if len(opts) < 2:
-        mquit('caesar.py -m <message> -n <number of shifts> [-e]')
+    if len(opts) < 3:
+        mquit(qmessage)
 
     message = ''
     shifts = ''
     enum = False
+    encrypt = True
 
     #  get and set all the user defined options
     for opt, arg in opts:
         if opt == '-m':
             message = arg
-        elif opt == '-e':
+        elif opt == '-a':
             enum = True
+        elif opt == '-e':
+            encrypt = True
+        elif opt == '-d':
+            encrypt = False
         elif opt == '-n':
             if not arg.isdigit():
-                mquit('caesar.py -m <message> -n <number of shifts> [-e]')
+                mquit(qmessage)
             shifts = int(arg)
 
     #  quit the script if the message is empty or if the number of shifts is empty and the enumeration option is not set
     if message == '' or (shifts == '' and not enum):
-        mquit('caesar.py -m <message> -n <number of shifts> [-e]')
+        mquit(qmessage)
 
     #  if the enumeration option is set, enumerate all possibilities
     #  else shift the message by the given number of shifts
     if enum:
         for shifts in range(0, 26, 1):
-            print caesar(message, shifts)
+            print caesar(message, shifts, encrypt)
     else:
-        print caesar(message, shifts)
+        print caesar(message, shifts, encrypt)
 
 if __name__ == "__main__":
     main()
