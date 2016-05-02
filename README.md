@@ -24,15 +24,68 @@ see run.sh for examples
 ## crypto
 
 ### caesar.py
-A tool to perform a caesar shift on a given message with the given number of shifts. 
+A tool to perform a caesar shift on a given message with the given number of shifts.
+
+options:
+
+-m,
+    the message to cipher
+-n,
+    the number of shifts to shift the cipher
+-e,
+    Encrypt the message
+-d,
+    Decrypt the message
+-a,
+    Enumerate all 26 caesar shift possibilities
 
 To run this script execute this command:
 
 ```python caesar.py -m <message> -n <number of shifts>```
 
 ### vigenere.py
-A tool to perform a vigenere shift using the given message and the given key. 
+A tool to perform a vigenere shift using the given message and the given key.
+
+options:
+
+-m,
+    The message to encrypt using the key
+
+-k,
+    The key to encrypt the message with
+
+-a,
+    enumerate vigenere using keys in the dictionary
+
+-f,
+    dictionary file
+
+-e,
+    encrypt the message
+
+-d,
+    decrypt the message
 
 To run this script execute this command: 
 
-```python vigenere.py -m <message> -k <key>```
+```python vigenere.py -m <message> -k <key> -e```
+
+## stego
+
+### office-steg.py
+A tool to embed files in an office xml file (files that end in x, eg .docx, .pptx, .xlsx, etc.).
+
+options:
+
+-c,
+    The cover file to hide the embeded file in
+
+-e,
+    The file to embed in the cover file
+
+-o,
+    The name of the file to output to
+
+To run this script execute this command:
+
+'''python office-steg.py -c <cover file name> -e <embed file name> -o <output file name>

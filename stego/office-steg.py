@@ -6,6 +6,21 @@ import random
 from util import mquit
 
 
+"""Python script to embed files in office xml files.
+
+Cover file must be files that end in x, eg .docx, .pptx, .xlsx, etc.
+These files use XML for their content which is leveraged in this script to hide files within the cover file.
+
+-c,
+    The cover file to hide the embeded file in
+
+-e,
+    The file to embed in the cover file
+
+-o,
+    The name of the file to output to"""
+
+
 def main():
     """Main function to run the script"""
     argv = sys.argv[1:]
