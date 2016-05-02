@@ -30,7 +30,25 @@ import sys
 import getopt
 from substitution import vigenere
 from util import mquit
-from util import enumerate_vigenere
+
+
+def enumerate_vigenere(message, filename, encrypt):
+    """Enumerates the filename performing a vigenere shift on each line of the file"""
+    fileobj = open(filename, 'r')
+    iterator = 0
+    user = ''
+    viewnumber = 10
+    while iterator != viewnumber or user != 'q':
+        temp = fileobj.readline().rstrip()
+        if temp == '':
+            break
+        print vigenere(message, temp, encrypt)
+        iterator += 1
+        if iterator == viewnumber:
+            user = raw_input('Press Enter to continue or q to quit: ')
+            if user != 'q':
+                iterator = 0
+    fileobj.close()
 
 
 def main():
