@@ -2,7 +2,6 @@ import sys
 import getopt
 import zipfile
 import os.path
-import random
 from util import mquit
 
 
@@ -37,6 +36,7 @@ def main():
     cfilename = ''
     efilename = ''
     ofilename = ''
+
     # get and set all the user defined options
     for opt, arg in opts:
         if opt == '-c':
@@ -60,19 +60,27 @@ def main():
     paths = []
     coverfile = zipfile.ZipFile(cfilename, 'r')
     outputfile = zipfile.ZipFile(ofilename, 'w')
+    maxdepth = 0
+    maxlength = 0
+    maxindex = -1
+    index = 0
 
     print 'Retrieving paths ...'
     for files in coverfile.namelist():
         # accumulate path's
         if files.find('/') != -1 and paths.count(files[:files.rfind('/') + 1]) == 0:
             paths.append(files[:files.rfind('/') + 1])
-    # choose a random path to hide the file in
-    pathindex = random.randrange(0, len(paths))
-    print efilename + ' will be hidden here: ' + paths[pathindex]
+            if files[:files.rfind('/') + 1].count('/') >= maxdepth and len(files[:files.rfind('/') + 1]) > maxlength:
+                maxdepth = files[:files.rfind('/') + 1].count('/')
+                maxlength = len(files[:files.rfind('/') + 1])
+                maxindex = index
+            index += 1
+
+    print efilename + ' will be hidden here: ' + paths[maxindex]
 
     # string to add to [Content_Types].xml so that the file is not corrupted
-    added = '<Override PartName=\"/' + paths[pathindex] + efilename + '\" ContentType=\"' \
-            + paths[pathindex] + efilename + '\"/>'
+    added = '<Override PartName=\"/' + paths[maxindex] + efilename + '\" ContentType=\"' \
+            + paths[maxindex] + efilename + '\"/>'
 
     print 'Copying data from: ' + cfilename + ' to: ' + ofilename + ' ...'
     for files in coverfile.infolist():
@@ -85,13 +93,13 @@ def main():
             contenttypefile = coverfile.read(files.filename)
             outputfile.writestr(files, contenttypefile[:contenttypefile.find('</Types>')] + added + '</Types>')
 
-    # embed the file in the new archive at the random path chosen
+    # embed the file in the new archive at the longest deepest path chosen
     print 'Inserting ' + efilename + ' ...'
-    outputfile.write(efilename, paths[pathindex] + efilename)
+    outputfile.write(efilename, paths[maxindex] + efilename)
     print 'Closing file streams ...'
     coverfile.close()
     outputfile.close()
-    print efilename + ' hidden in : ' + paths[pathindex]
+    print efilename + ' hidden in : ' + paths[maxindex]
 
 if __name__ == '__main__':
     main()

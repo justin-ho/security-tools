@@ -30,12 +30,16 @@ options:
 
 -m,
     the message to cipher
+
 -n,
     the number of shifts to shift the cipher
+
 -e,
     Encrypt the message
+
 -d,
     Decrypt the message
+
 -a,
     Enumerate all 26 caesar shift possibilities
 
@@ -73,7 +77,8 @@ To run this script execute this command:
 ## stego
 
 ### office-steg.py
-A tool to embed files in an office xml file (files that end in x, eg .docx, .pptx, .xlsx, etc.).
+A tool to embed files in an office xml file at the longest path within the file
+(files that end in x, eg .docx, .pptx, .xlsx, etc.).
 
 options:
 
@@ -88,4 +93,4 @@ options:
 
 To run this script execute this command:
 
-'''python office-steg.py -c <cover file name> -e <embed file name> -o <output file name>
+```python office-steg.py -c <cover file name> -e <embed file name> -o <output file name>```
