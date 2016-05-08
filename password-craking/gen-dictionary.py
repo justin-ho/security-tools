@@ -2,6 +2,18 @@
 
 """Python script to generate a dictionary given a url and starting and ending delimeters
 
+-u,
+    The url to parse the dictionary from
+
+-o,
+    The output file to save the dictionary in
+
+-s,
+    The starting delimiter which the element is surrounded by
+
+-e,
+    The ending delimiter which the element is surrounded by
+
 Example:
     HAWAIIAN DICTIONARY
     python gen-dictionary.py -u "http://hawaiian-words.com/hawaiian-dictionary"
@@ -17,14 +29,15 @@ from util import mquit
 def main():
     """Main function to run the script"""
     argv = sys.argv[1:]
+    qmessage = 'gen-dictionary.py -u <URL> -o <outputfile> -s <starting delimeter> -e <ending delimeter>'
     try:
         opts, args = getopt.getopt(argv, "u:o:s:e:")
     except getopt.GetoptError:
-        mquit('gen-dictionary.py -u <URL> -o <outputfile> -s <starting delimeter> -e <ending delimeter>')
+        mquit(qmessage)
 
     #  All options must be specified
     if len(opts) < 4:
-        mquit('gen-dictionary.py -u <URL> -o <outputfile> -s <starting delimeter> -e <ending delimeter>')
+        mquit(qmessage)
 
     url = ''
     output = ''
@@ -43,7 +56,7 @@ def main():
 
     #  require all options, if not exit
     if url == '' or output == '' or start == '' or end == '':
-        mquit('gen-dictionary.py -u <URL> -o <outputfile> -s <starting delimeter> -e <ending delimeter>')
+        mquit(qmessage)
 
     print "Openning output file: " + output
     outputfile = open(output, "w")

@@ -33,17 +33,20 @@ from util import mquit
 
 
 def enumerate_vigenere(message, filename, encrypt):
-    """Enumerates the filename performing a vigenere shift on each line of the file"""
+    """Enumerates the filename file performing a vigenere shift
+    on the message using each line from the file as the key"""
     fileobj = open(filename, 'r')
     iterator = 0
     user = ''
     viewnumber = 10
+    #  print the enumeration 10 entries at a time
     while iterator != viewnumber or user != 'q':
         temp = fileobj.readline().rstrip()
         if temp == '':
             break
         print vigenere(message, temp, encrypt)
         iterator += 1
+        #  When the enumeration pauses ask the user if they want to continue
         if iterator == viewnumber:
             user = raw_input('Press Enter to continue or q to quit: ')
             if user != 'q':

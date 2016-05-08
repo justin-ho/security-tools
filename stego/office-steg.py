@@ -20,42 +20,7 @@ These files use XML for their content which is leveraged in this script to hide 
     The name of the file to output to"""
 
 
-def main():
-    """Main function to run the script"""
-    argv = sys.argv[1:]
-    qmessage = 'office-steg.py -c <cover file name> -e <embed file name> -o <output file name>'
-    try:
-        opts, args = getopt.getopt(argv, "c:e:o:")
-    except getopt.GetoptError:
-        mquit(qmessage)
-
-    # All options must be specified except for the enumeration option
-    if len(opts) < 3:
-        mquit(qmessage)
-
-    cfilename = ''
-    efilename = ''
-    ofilename = ''
-
-    # get and set all the user defined options
-    for opt, arg in opts:
-        if opt == '-c':
-            cfilename = arg
-        elif opt == '-e':
-            efilename = arg
-        elif opt == '-o':
-            ofilename = arg
-
-    # validate user input
-    if cfilename == '' or efilename == '' or ofilename == '':
-        mquit(qmessage)
-    if not os.path.isfile(cfilename):
-        mquit(cfilename + ' : file does not exist')
-    if not os.path.isfile(efilename):
-        mquit(efilename + ' : file does not exist')
-    if os.path.isfile(ofilename):
-        mquit(ofilename + ' : cannot write to file, file already exists')
-
+def officesteg(cfilename, efilename, ofilename):
     # initialize required variables
     paths = []
     coverfile = zipfile.ZipFile(cfilename, 'r')
@@ -100,6 +65,45 @@ def main():
     coverfile.close()
     outputfile.close()
     print efilename + ' hidden in : ' + paths[maxindex]
+
+
+def main():
+    """Main function to run the script"""
+    argv = sys.argv[1:]
+    qmessage = 'office-steg.py -c <cover file name> -e <embed file name> -o <output file name>'
+    try:
+        opts, args = getopt.getopt(argv, "c:e:o:")
+    except getopt.GetoptError:
+        mquit(qmessage)
+
+    # All options must be specified except for the enumeration option
+    if len(opts) < 3:
+        mquit(qmessage)
+
+    cfilename = ''
+    efilename = ''
+    ofilename = ''
+
+    # get and set all the user defined options
+    for opt, arg in opts:
+        if opt == '-c':
+            cfilename = arg
+        elif opt == '-e':
+            efilename = arg
+        elif opt == '-o':
+            ofilename = arg
+
+    # validate user input
+    if cfilename == '' or efilename == '' or ofilename == '':
+        mquit(qmessage)
+    if not os.path.isfile(cfilename):
+        mquit(cfilename + ' : file does not exist')
+    if not os.path.isfile(efilename):
+        mquit(efilename + ' : file does not exist')
+    if os.path.isfile(ofilename):
+        mquit(ofilename + ' : cannot write to file, file already exists')
+
+    officesteg(cfilename, efilename, ofilename)
 
 if __name__ == '__main__':
     main()
