@@ -17,7 +17,10 @@ These files use XML for their content which is leveraged in this script to hide 
     The file to embed in the cover file
 
 -o,
-    The name of the file to output to"""
+    The name of the file to output to
+
+-i,
+    Option to hide the embeded file in an image within the coverfile"""
 
 
 def officesteg(cfilename, efilename, ofilename):
@@ -67,12 +70,43 @@ def officesteg(cfilename, efilename, ofilename):
     print efilename + ' hidden in : ' + paths[maxindex]
 
 
+def officestegimg(cfilename, efilename, ofilename):
+    """Hides the embeded file in an image within the coverfile"""
+    # initialize required variables
+    coverfile = zipfile.ZipFile(cfilename, 'r')
+    outputfile = zipfile.ZipFile(ofilename, 'w')
+    efile = open(efilename, 'rb')
+    exts = ['jpg', 'png', 'jpeg']
+    imagefile = ''
+
+    print 'Searching ' + cfilename + ' for an image file and Copying other data to: ' + ofilename
+    for files in coverfile.namelist():
+        if imagefile == '' and files[files.rfind('.') + 1:] in exts:
+            print 'Inserting ' + efilename + ' in: ' + files + ' ...'
+            imagefile = files
+            content = coverfile.read(files) + efile.read()
+            outputfile.writestr(files, content)
+        else:
+            content = coverfile.read(files)
+            outputfile.writestr(files, content)
+
+    print 'Closing file streams ...'
+    coverfile.close()
+    outputfile.close()
+    efile.close()
+
+    if imagefile == '':
+        mquit('No image file found in: ' + cfilename)
+
+
+
+
 def main():
     """Main function to run the script"""
     argv = sys.argv[1:]
     qmessage = 'office-steg.py -c <cover file name> -e <embed file name> -o <output file name>'
     try:
-        opts, args = getopt.getopt(argv, "c:e:o:")
+        opts, args = getopt.getopt(argv, "c:e:o:i")
     except getopt.GetoptError:
         mquit(qmessage)
 
@@ -83,6 +117,7 @@ def main():
     cfilename = ''
     efilename = ''
     ofilename = ''
+    image = False
 
     # get and set all the user defined options
     for opt, arg in opts:
@@ -92,6 +127,8 @@ def main():
             efilename = arg
         elif opt == '-o':
             ofilename = arg
+        elif opt == '-i':
+            image = True
 
     # validate user input
     if cfilename == '' or efilename == '' or ofilename == '':
@@ -103,7 +140,12 @@ def main():
     if os.path.isfile(ofilename):
         mquit(ofilename + ' : cannot write to file, file already exists')
 
-    officesteg(cfilename, efilename, ofilename)
+    if image:
+        officestegimg(cfilename, efilename, ofilename)
+    else:
+        officesteg(cfilename, efilename, ofilename)
+    print efilename + ' was successfully hidden in: ' + cfilename + ' in the file: ' + ofilename
+
 
 if __name__ == '__main__':
     main()

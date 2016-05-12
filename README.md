@@ -4,7 +4,9 @@ A repository for security related tools
 ## password-cracking
 
 ### gen-dictionary.py
-A tool to generate dictionaries from a given url for password cracking. The script will connect to the URL and parse for the starting and ending delimeters and take whatever is between the starting and ending delimeter and output it to the outputfile. 
+A tool to generate dictionaries from a given url for password cracking. The script will connect to the
+URL and parse for the starting and ending delimeters and take whatever is between the starting and ending
+delimeter and output it to the outputfile.
 
 Options:
 
@@ -33,7 +35,10 @@ To run the script execute this command:
 
 
 ### hash-dictionary.py
-A tool to generate hashes from a dictionary. This tool was created to assist in creating password cracking challenges for CTF's. The tool will hash each line in the dictionary individually and output the hashes in hex to the outputfile. The option of specifying the hashing algorithm is given, if no hashing algorithm is specified the default algorithm is sha256. if the flag option is used the hash will be concatenated to the given flag title.
+A tool to generate hashes from a dictionary. This tool was created to assist in creating password cracking
+challenges for CTF's. The tool will hash each line in the dictionary individually and output the hashes in hex
+to the outputfile. The option of specifying the hashing algorithm is given, if no hashing algorithm is specified
+the default algorithm is sha256. if the flag option is used the hash will be concatenated to the given flag title.
 
 Options:
 
@@ -136,6 +141,10 @@ Options:
 
 -o,
     The name of the file to output to
+
+-i,
+    Option to hide the embeded file in an image within the coverfile
+
 
 To run this script execute this command:
 
